@@ -1,0 +1,95 @@
+header {
+  padding: 18px;
+  background: #2563eb;
+  color: white;
+}
+
+header h1 {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+main {
+  width: min(650px, calc(100% - 32px));
+  margin: 30px auto;
+}
+
+.create-post,
+.post {
+  padding: 20px;
+  background: white;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+}
+
+.create-post {
+  margin-bottom: 30px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #bbbbbb;
+  border-radius: 6px;
+  font: inherit;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.post {
+  margin-bottom: 15px;
+}
+
+.post h3 {
+  margin: 0 0 10px;
+}
+
+.post p {
+  margin: 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.message {
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.error {
+  margin-bottom: 0;
+  color: #dc2626;
+}
