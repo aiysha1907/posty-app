@@ -1,13 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
+import { PostForm } from './components/post-form/post-form';
+import { PostList } from './components/post-list/post-list';
 import { Post } from './models/post';
 import { PostService } from './services/post.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule],
+  imports: [
+    PostForm,
+    PostList
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -15,11 +19,6 @@ export class App implements OnInit {
   private readonly postService = inject(PostService);
 
   posts: Post[] = [];
-
-  newPost: Post = {
-    title: '',
-    description: ''
-  };
 
   loading = false;
   posting = false;
@@ -46,29 +45,13 @@ export class App implements OnInit {
     });
   }
 
-  createPost(): void {
-    const post: Post = {
-      title: this.newPost.title.trim(),
-      description: this.newPost.description.trim()
-    };
-
-    if (!post.title || !post.description) {
-      this.errorMessage = 'Enter both a title and description.';
-      return;
-    }
-
+  createPost(post: Post): void {
     this.posting = true;
     this.errorMessage = '';
 
     this.postService.createPost(post).subscribe({
       next: (createdPost) => {
         this.posts = [createdPost, ...this.posts];
-
-        this.newPost = {
-          title: '',
-          description: ''
-        };
-
         this.posting = false;
       },
       error: (error) => {

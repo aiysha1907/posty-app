@@ -1,0 +1,33 @@
+<section class="create-post">
+  <h2>Create a post</h2>
+
+  <form #postForm="ngForm" (ngSubmit)="submitPost()">
+    <label for="title">Title</label>
+
+    <input
+      id="title"
+      type="text"
+      name="title"
+      [(ngModel)]="newPost.title"
+      placeholder="Enter the post title"
+      required
+    />
+
+    <label for="description">Description</label>
+
+    <textarea
+      id="description"
+      name="description"
+      [(ngModel)]="newPost.description"
+      placeholder="Write your post..."
+      required
+    ></textarea>
+
+    <button
+      type="submit"
+      [disabled]="postForm.invalid || posting"
+    >
+      {{ posting ? 'Posting...' : 'Post' }}
+    </button>
+  </form>
+</section>

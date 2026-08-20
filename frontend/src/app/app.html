@@ -3,58 +3,17 @@
 </header>
 
 <main>
-  <section class="create-post">
-    <h2>Create a post</h2>
+  <app-post-form
+    [posting]="posting"
+    (postSubmitted)="createPost($event)"
+  />
 
-    <form #postForm="ngForm" (ngSubmit)="createPost()">
-      <label for="title">Title</label>
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
 
-      <input
-        id="title"
-        type="text"
-        name="title"
-        [(ngModel)]="newPost.title"
-        placeholder="Enter the post title"
-        required
-      />
-
-      <label for="description">Description</label>
-
-      <textarea
-        id="description"
-        name="description"
-        [(ngModel)]="newPost.description"
-        placeholder="Write your post..."
-        required
-      ></textarea>
-
-      <button
-        type="submit"
-        [disabled]="postForm.invalid || posting"
-      >
-        {{ posting ? 'Posting...' : 'Post' }}
-      </button>
-    </form>
-
-    @if (errorMessage) {
-      <p class="error">{{ errorMessage }}</p>
-    }
-  </section>
-
-  <section class="posts">
-    <h2>Posts</h2>
-
-    @if (loading) {
-      <p class="message">Loading posts...</p>
-    } @else {
-      @for (post of posts; track post.id) {
-        <article class="post">
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.description }}</p>
-        </article>
-      } @empty {
-        <p class="message">No posts yet. Create the first post!</p>
-      }
-    }
-  </section>
+  <app-post-list
+    [posts]="posts"
+    [loading]="loading"
+  />
 </main>

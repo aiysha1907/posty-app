@@ -1,0 +1,16 @@
+<section class="posts">
+  <h2>Posts</h2>
+
+  @if (loading) {
+    <p class="message">Loading posts...</p>
+  } @else {
+    @for (post of posts; track post.id) {
+      <article class="post">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.description }}</p>
+      </article>
+    } @empty {
+      <p class="message">No posts yet. Create the first post!</p>
+    }
+  }
+</section>
