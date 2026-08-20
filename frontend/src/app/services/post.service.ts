@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Post } from '../models/post';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostService {
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:8080/api/posts';
+  private readonly apiUrl = environment.apiBaseUrl + '/posts';
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.apiUrl);

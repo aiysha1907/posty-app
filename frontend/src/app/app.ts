@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 
 import { PostForm } from './components/post-form/post-form';
 import { PostList } from './components/post-list/post-list';
@@ -8,57 +8,55 @@ import { PostService } from './services/post.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    PostForm,
-    PostList
-  ],
+  imports: [PostForm, PostList],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App implements OnInit {
   private readonly postService = inject(PostService);
 
-  posts: Post[] = [];
+  readonly posts = signal<Post[]>([]);
 
-  loading = false;
-  posting = false;
-  errorMessage = '';
+  readonly loading = signal(false);
+  readonly posting = signal(false);
+  readonly errorMessage = signal('');
 
   ngOnInit(): void {
     this.loadPosts();
   }
 
   loadPosts(): void {
-    this.loading = true;
-    this.errorMessage = '';
+    this.loading.set(true);
+    this.errorMessage.set('');
 
     this.postService.getPosts().subscribe({
       next: (posts) => {
-        this.posts = posts;
-        this.loading = false;
+        this.posts.set(posts);
       },
       error: (error) => {
         console.error(error);
-        this.errorMessage = 'Unable to load posts.';
-        this.loading = false;
-      }
+        this.errorMessage.set('Unable to load posts.');
+      },
+      complete: () => {
+        this.loading.set(false);
+      },
     });
   }
 
   createPost(post: Post): void {
-    this.posting = true;
-    this.errorMessage = '';
+    this.posting.set(true);
+    this.errorMessage.set('');
 
     this.postService.createPost(post).subscribe({
       next: (createdPost) => {
-        this.posts = [createdPost, ...this.posts];
-        this.posting = false;
+        this.posts.update((posts) => [createdPost, ...posts]);
+        this.posting.set(false);
       },
       error: (error) => {
         console.error(error);
-        this.errorMessage = 'Unable to create the post.';
-        this.posting = false;
-      }
+        this.errorMessage.set('Unable to create the post.');
+        this.posting.set(false);
+      },
     });
   }
 }

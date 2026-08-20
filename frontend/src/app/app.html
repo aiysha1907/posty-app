@@ -3,17 +3,11 @@
 </header>
 
 <main>
-  <app-post-form
-    [posting]="posting"
-    (postSubmitted)="createPost($event)"
-  />
+  <app-post-form [posting]="posting()" (postSubmitted)="createPost($event)" />
 
-  @if (errorMessage) {
-    <p class="error">{{ errorMessage }}</p>
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
   }
 
-  <app-post-list
-    [posts]="posts"
-    [loading]="loading"
-  />
+  <app-post-list [posts]="posts()" [loading]="loading()" />
 </main>
